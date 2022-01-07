@@ -1,0 +1,7 @@
+Example Encoded URLS:
+
+https://urldefense.com/v3/__https://google.com__;!!D0SnjzUQI17x!VcBcfvul5wWsx1iw3KhoC66wtff2ieY2HggKpaddrxr1snmNT5EvlqvREzZY7KzEVcQYj6yeDX4$
+
+https://urldefense.com/v3/__https://youtube.com__;!!D0SnjzUQI17x!VcBcfvul5wWsx1iw3KhoC66wtff2ieY2HggKpaddrxr1snmNT5EvlqvREzZY7KzEVcQY28EK2uU$
+
+https://urldefense.com/v3/__https://purple.com__;!!D0SnjzUQI17x!VcBcfvul5wWsx1iw3KhoC66wtff2ieY2HggKpaddrxr1snmNT5EvlqvREzZY7KzEVcQYNZKO_g0$
