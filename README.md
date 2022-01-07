@@ -9,7 +9,6 @@ This repo contains different tools that I have written in Python that perform Bl
 ## Technologies
 
 * [Python 3](https://www.python.org/)
-* [Python 2](https://www.python.org/)
 
 ## Getting Started
 
