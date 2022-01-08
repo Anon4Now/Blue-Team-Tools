@@ -1,9 +1,7 @@
-import tkinter as tk
 import sys
 import re
 import string
 from base64 import urlsafe_b64decode
-from tkinter import *
 
 if sys.version_info[0] < 3:
     from urllib import unquote
@@ -17,55 +15,6 @@ else:
     from html import unescape
 
     maketrans = str.maketrans
-
-
-# ---------------------------------------------------------------------
-
-
-# Generate GUI for user input
-def tkinter_input(prompt=""):
-    root = tk.Tk()
-    root.geometry("400x50")
-    root.title("Pilot Decoder")
-    root.configure(bg='#16325c')
-    entry = tk.Entry(root, bd=1)
-    entry.config(fg='grey')
-    entry.pack(side="left")
-    entry.pack()
-    entry.grid(row=1,
-               column=0,
-               padx=7,
-               pady=10,
-               ipadx=130,
-               ipady=3)
-    result = None
-
-    # Eventlisteners for user text entry
-    def on_entry_click(event):
-        if entry.get() == 'Paste encoded URL and press <ENTER>...':
-            entry.delete(0, "end")  # delete all the text in the entry
-        entry.insert(0, '')  # Insert blank for user input
-        entry.config(fg='black')
-
-    def on_focusout(event):
-        if entry.get() == '':
-            entry.insert(0, 'Paste encoded URL and press <ENTER>...')
-            entry.config(fg='grey')
-
-    def callback(event):
-        nonlocal result
-        result = entry.get()
-        root.destroy()
-
-    entry.insert(0, 'Paste encoded URL and press <ENTER>...')
-    entry.bind('<FocusIn>', on_entry_click)
-    entry.bind('<FocusOut>', on_focusout)
-    entry.bind("<Return>", callback)
-    root.mainloop()
-    return result
-
-
-result = tkinter_input()
 
 
 # ------------------------------------------------------------------------------
@@ -96,7 +45,6 @@ class URLDefenseDecoder(object):
 
     def decode(self, rewritten_url):
         match = self.ud_pattern.search(rewritten_url)
-        # print("here")
         if match:
             if match.group(1) == 'v1':
                 return self.decode_v1(rewritten_url)
@@ -169,26 +117,13 @@ class URLDefenseDecoder(object):
             raise ValueError('Error parsing URL')
 
 
-# Main function that takes user input and passes to defensedecoder class
-def main():
-    urldefense_decoder = URLDefenseDecoder()
+# # Main function that takes user input and passes to defensedecoder class
+# def main():
+#     urldefense_decoder = URLDefenseDecoder()
+#
+#     try:
+#         return (urldefense_decoder.decode(result))
+#     except ValueError as e:
+#         return (e)
 
-    try:
-        return (urldefense_decoder.decode(result))
-    except ValueError as e:
-        return (e)
 
-
-# Returns output to GUI
-endresult = main()
-root_out = Tk()
-
-root_out.geometry("400x50")
-root_out.title("Pilot Decoder Output")
-text = Text(root_out)
-text.pack()
-text.insert(END, endresult)
-root_out.mainloop()
-
-if __name__ == '__main__':
-    main()
