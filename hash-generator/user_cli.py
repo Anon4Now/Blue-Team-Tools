@@ -23,7 +23,3 @@ class GetUserOptions:
         else:
             return options
 
-
-if __name__ == '__main__':
-    userOpts = GetUserOptions()
-    print(userOpts.checkOptions())

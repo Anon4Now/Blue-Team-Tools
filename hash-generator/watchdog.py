@@ -1,5 +1,8 @@
-class Watchdog:
+from watchdog.observers import Observer
+from watchdog.events import PatternMatchingEventHandler
 
+
+class Watchdog:
     eventCheck = False
 
     def __init__(self, path, patterns=["*"], ignore_patterns=None, ignore_directories=False, case_sensitive=True,
@@ -39,4 +42,3 @@ class Watchdog:
         my_observer = Observer()
         my_observer.start()
         my_observer.schedule(self.eventHandlerConfig(), self.path, recursive=self.goRecursive)
-

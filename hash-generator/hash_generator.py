@@ -1,3 +1,6 @@
+import hashlib
+
+
 class HashGenerator:
     hash_sha256 = hashlib.sha256()  # Create the hash object for SHA256 `.sha256()`
     hash_sha1 = hashlib.sha1()  # Create the hash object for SHA1 `.sha1()`
