@@ -1,5 +1,7 @@
 class Watchdog:
 
+    eventCheck = False
+
     def __init__(self, path, patterns=["*"], ignore_patterns=None, ignore_directories=False, case_sensitive=True,
                  go_recursively=True):
         self.path = path
@@ -21,7 +23,7 @@ class Watchdog:
     @staticmethod
     def on_created(event):
         if event:
-            return True
+            Watchdog.eventCheck = True
 
     # watch for "modified" events in file path and write event to txt file in py path
     @staticmethod
