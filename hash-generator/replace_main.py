@@ -5,11 +5,14 @@ from hash_generator import HashGenerator
 from user_cli import GetUserOptions
 
 
+fileName = "list.txt"
+
+
 # Will reset script upon init in case reset did not occur at end
 def clean_script():
-    if os.path.exists("list.txt"):
+    if os.path.exists(fileName):
 
-        os.remove("list.txt")
+        os.remove(fileName)
 
     else:
         pass
@@ -31,7 +34,15 @@ if __name__ == '__main__':
             if not checkForFile:
                 continue
             else:
-                
+                hashGen = HashGenerator(fileName)
+
+                # call functions and sleep
+                time.sleep(10)
+                hashGen.startHash()
+        #         # time.sleep(3)
+        #         # vtHashCheck()
+                time.sleep(1)
+                clean_script()
 
         elif userInput == 'n':
             userInput = input("[+] Do you want to exit [y/n]? >> ")
