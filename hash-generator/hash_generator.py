@@ -29,5 +29,7 @@ class HashGenerator:
         print(f'[SHA-1 Hash] - {HashGenerator.hash_sha1.hexdigest()}')  # Print the hash value to CLI
         print(f'[MD5 Hash] - {HashGenerator.hash_md5.hexdigest()}\n')  # Print the hash value to CLI
 
-
-    def startHash
+    def startHash(self):
+        self.readFile()
+        self.generateHash()
+        self.returnHashes()

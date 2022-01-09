@@ -21,6 +21,8 @@ if __name__ == '__main__':
 
     watcher = Watchdog(outArgs['folder'])
 
+    hashGen = HashGenerator("list.txt")
+
     while True:
 
         userInput = input("Would you like to start watching a folder? y/n")
@@ -46,7 +48,7 @@ if __name__ == '__main__':
                     break
             # call functions and sleep
             time.sleep(10)
-            hashGen.
+            hashGen.startHash()
             # time.sleep(3)
             # vtHashCheck()
             time.sleep(1)
