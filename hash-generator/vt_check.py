@@ -1,7 +1,6 @@
-import requests
-import os
-from requests.api import post
-from requests.sessions import session
+import requests, os, datetime, json
+# from requests.api import post
+# from requests.sessions import session
 from dotenv import load_dotenv
 
 
@@ -26,6 +25,7 @@ class VTChecking:
     @staticmethod
     def parseJson(content):
 
+        checkIDJson = json.loads(content)
         lastStatsDict = {}
 
         extractLastAnalysisDate = datetime.datetime.fromtimestamp(
@@ -43,14 +43,14 @@ class VTChecking:
             if key == 'malicious':
                 if lastStatsDict[key] == 0:
                     print(f'\nBased on results, the file appears safe')
-                elif lastStatsDict[key] > 0 and lastStatsDict[key] < 2:
+                elif 0 < lastStatsDict[key] < 2:
                     print(f'\nSome vendors flagged this file, consider additional research')
                 elif lastStatsDict[key] > 2:
                     print(f'\nThis file may be malicious, consider not downloading')
 
     @staticmethod
     def checkError(content):
-
+        checkIDJson = json.loads(content)
         extractErrorCode = checkIDJson['error']['code']
         if extractErrorCode == 'NotFoundError':
             print(

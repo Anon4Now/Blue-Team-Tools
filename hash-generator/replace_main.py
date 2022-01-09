@@ -3,6 +3,7 @@ import os, time
 from watchingdog import Watchdog
 from hash_generator import HashGenerator
 from user_cli import GetUserOptions
+from vt_check import VTChecking
 
 
 fileName = "list.txt"
@@ -42,9 +43,21 @@ if __name__ == '__main__':
             else:
                 hashGen = HashGenerator(fileName)
 
-                # call functions and sleep
+                # generate hashes
                 time.sleep(10)
-                hashGen.startHash()
+                sha256HASH = hashGen.startHash()
+
+                # check to see if user wants to use API
+                useAPI = getArgs.useVirusTotal()
+                if useAPI:
+                    vt = VTChecking()
+                    vt.hashExists(sha256HASH)
+
+                elif not useAPI:
+                    pass
+                else:
+                    print("[-] Unknown entry, please use 'y' or 'n'...")
+
         #         # time.sleep(3)
         #         # vtHashCheck()
                 time.sleep(1)
