@@ -30,7 +30,9 @@ class Watchdog:
     # watch for "modified" events in file path and write event to txt file in py path
     @staticmethod
     def on_modified(event):
-        t = str(event.src_path)
-
-        with open("list.txt", "w+") as file:
-            file.write(t)
+        # t = str(event.src_path)
+        getEvent = str(event)
+        fileName = "list.txt"
+        with open(fileName, "w+") as file:
+            file.write(getEvent)
+        return fileName
