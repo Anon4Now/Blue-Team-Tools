@@ -1,6 +1,6 @@
 import os, sys, time
 
-from watchdog import Watchdog
+from watchingdog import Watchdog
 from user_cli import GetUserOptions
 from hash_generator import HashGenerator
 
@@ -18,16 +18,16 @@ def clean_script():
 if __name__ == '__main__':
     clean_script()
 
-    userOpts = GetUserOptions()
-    outArgs = userOpts.checkOptions()
-
-    watcher = Watchdog(outArgs['folder'])
-
-    hashGen = HashGenerator("list.txt")
-
     while True:
 
         userInput = input("Would you like to start watching a folder? y/n")
+
+        userOpts = GetUserOptions()
+        outArgs = userOpts.checkOptions()
+
+        watcher = Watchdog(outArgs['folder'])
+
+        hashGen = HashGenerator("list.txt")
 
         if userInput == 'y':
 
@@ -69,4 +69,3 @@ if __name__ == '__main__':
         else:
             print("Unknown input, please enter 'y' or 'n'...")
             continue
-
