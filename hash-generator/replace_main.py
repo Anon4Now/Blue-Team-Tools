@@ -27,11 +27,17 @@ if __name__ == '__main__':
         getArgs = GetUserOptions()
 
         if userInput == 'y':
-            getArgs.startWatchingPath()
+            path = getArgs.startWatchingPath()
+
+            watcher = Watchdog(path)
+            watcher.startObserver()
+
             print("[+] Seconds left to download file")
-            checkForFile = getArgs.countDownToDownload(Watchdog.eventCheck)
+            checkForFile = getArgs.countDownToDownload()
 
             if not checkForFile:
+                print("\r[-] No file detected, returning to start...")
+                time.sleep(3)
                 continue
             else:
                 hashGen = HashGenerator(fileName)

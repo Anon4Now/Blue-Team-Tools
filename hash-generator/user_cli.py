@@ -1,5 +1,7 @@
 import sys, time
 
+from watchingdog import Watchdog
+
 
 class GetUserOptions:
     fileDetected = False
@@ -17,12 +19,12 @@ class GetUserOptions:
             pass  # update this to pull the folder based on input (i.e. Documents)
 
     @staticmethod
-    def countDownToDownload(eventCheck):
-        for i in range(5, -1, -1):
-            if not eventCheck:
+    def countDownToDownload():
+        for i in range(45, -1, -1):
+            if not Watchdog.eventCheck:
                 if i == 0:
                     sys.stdout.flush()
-                    sys.stdout.write(f'\r[-] No file detected, returning to start...')
+                    # sys.stdout.write(f'\r[-] No file detected, returning to start...')
                     return
 
                 else:
@@ -31,7 +33,7 @@ class GetUserOptions:
                     time.sleep(1)
 
             else:
-                print(f'[+] File seen - generating hashes...\n')
+                print(f'\r[+] File seen - generating hashes...\n')
                 sys.stdout.flush()
                 return True
 
