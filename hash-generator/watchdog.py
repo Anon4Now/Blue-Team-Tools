@@ -13,13 +13,9 @@ class Watchdog:
         # Event Handler Configurations
         my_event_handler = PatternMatchingEventHandler(self.patterns, self.ignorePatterns, self.ignoreDirectories,
                                                        self.caseSensitive)
-        my_event_handler.on_created = on_created
-        my_event_handler.on_modified = on_modified
+        my_event_handler.on_created = self.on_created
+        my_event_handler.on_modified = self.on_modified
         return my_event_handler
-
-    def setObserver(self):
-        my_observer = Observer()
-        my_observer.schedule(self.eventHandlerConfig(), self.path, recursive=self.goRecursive)
 
     # watch for "create" events in file path
     @staticmethod
@@ -36,3 +32,9 @@ class Watchdog:
         with open(fileName, "w+") as file:
             file.write(getEvent)
         return fileName
+
+    def startObserver(self):
+        my_observer = Observer()
+        my_observer.start()
+        my_observer.schedule(self.eventHandlerConfig(), self.path, recursive=self.goRecursive)
+
