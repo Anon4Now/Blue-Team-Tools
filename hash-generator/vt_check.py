@@ -1,6 +1,4 @@
-import requests, os, datetime, json
-# from requests.api import post
-# from requests.sessions import session
+import requests, os, datetime
 from dotenv import load_dotenv
 
 
