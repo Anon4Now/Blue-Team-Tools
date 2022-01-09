@@ -38,5 +38,17 @@ class GetUserOptions:
                 return True
 
     @staticmethod
+    def useVirusTotal():
+
+        vt = input("Would you like to check the SHA256 hash against VirusTotal DB [y/n]? >> ")
+
+        if vt == 'y':
+            return True
+        elif vt == 'n':
+            return False
+        else:
+            return
+
+    @staticmethod
     def stopWatching():
         exit()

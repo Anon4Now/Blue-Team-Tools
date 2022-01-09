@@ -1,4 +1,4 @@
-import os, sys, time
+import os, time
 
 from watchingdog import Watchdog
 from hash_generator import HashGenerator
