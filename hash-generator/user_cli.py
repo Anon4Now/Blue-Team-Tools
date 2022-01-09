@@ -1,25 +1,40 @@
-import optparse
+import sys, time
 
 
 class GetUserOptions:
-    parser = optparse.OptionParser()
+    fileDetected = False
 
     @staticmethod
-    def setOptions():
+    def startWatchingPath():
 
-        GetUserOptions.parser.add_option("-f", "--folder", dest="folder",
-                                         help="Path for watchdog to monitor for changes")  # generate options for args
-        GetUserOptions.parser.add_option("-v", "--virusTotal", dest="virusTotal",
-                                         help="Check the SHA256 hash against Virus Total hash DB")  # generate options for args
+        path = input(
+            "[+] Folder to be monitored, default is Downloads [enter file path or enter 'd' for default]? >> ")
 
-        parsingInput = GetUserOptions.parser.parse_args()
-        return parsingInput
-
-    def checkOptions(self):
-        (options, args) = self.setOptions()
-
-        if not options.folder:  # provide inline error-handling if needed args are not provided
-            GetUserOptions.parser.error("[-] Please specify an interface, --help for more info")
+        if path == 'd':
+            path = 'C:/Users/tutko/Downloads'
+            return path
         else:
-            return options
+            pass  # update this to pull the folder based on input (i.e. Documents)
 
+    @staticmethod
+    def countDownToDownload(eventCheck):
+        for i in range(5, -1, -1):
+            if not eventCheck:
+                if i == 0:
+                    sys.stdout.flush()
+                    sys.stdout.write(f'\r[-] No file detected, returning to start...')
+                    return
+
+                else:
+                    sys.stdout.write("\r" + str(i))
+                    sys.stdout.flush()
+                    time.sleep(1)
+
+            else:
+                print(f'[+] File seen - generating hashes...\n')
+                sys.stdout.flush()
+                return True
+
+    @staticmethod
+    def stopWatching():
+        exit()
