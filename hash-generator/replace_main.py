@@ -58,9 +58,11 @@ if __name__ == '__main__':
 
                         if 'error' not in checkIDJson:
                             vt.parseJson(checkIDJson)
+                            break
 
                         if 'error' in checkIDJson:
                             vt.checkError(checkIDJson)
+                            break
 
                     elif not useAPI:
                         checkInput = input("[+] Would you like to exit to start [y/n]? >> ")
