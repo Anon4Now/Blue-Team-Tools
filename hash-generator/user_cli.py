@@ -24,7 +24,6 @@ class GetUserOptions:
             if not Watchdog.eventCheck:
                 if i == 0:
                     sys.stdout.flush()
-                    # sys.stdout.write(f'\r[-] No file detected, returning to start...')
                     return
 
                 else:

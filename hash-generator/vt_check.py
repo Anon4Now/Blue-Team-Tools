@@ -23,7 +23,6 @@ class VTChecking:
     @staticmethod
     def parseJson(content):
 
-        # checkIDJson = json.loads(content)
         lastStatsDict = {}
 
         extractLastAnalysisDate = datetime.datetime.fromtimestamp(
@@ -48,7 +47,6 @@ class VTChecking:
 
     @staticmethod
     def checkError(content):
-        # checkIDJson = json.loads(content)
         extractErrorCode = content['error']['code']
         if extractErrorCode == 'NotFoundError':
             print(
