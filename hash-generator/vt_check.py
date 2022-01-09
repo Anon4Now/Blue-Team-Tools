@@ -25,12 +25,12 @@ class VTChecking:
     @staticmethod
     def parseJson(content):
 
-        checkIDJson = json.loads(content)
+        # checkIDJson = json.loads(content)
         lastStatsDict = {}
 
         extractLastAnalysisDate = datetime.datetime.fromtimestamp(
-            checkIDJson['data']['attributes']['last_analysis_date'])
-        extractLastAnalysisStats = checkIDJson['data']['attributes']['last_analysis_stats']
+            content['data']['attributes']['last_analysis_date'])
+        extractLastAnalysisStats = content['data']['attributes']['last_analysis_stats']
 
         print(f'Last Analysis Date : {extractLastAnalysisDate}')
 
@@ -50,8 +50,8 @@ class VTChecking:
 
     @staticmethod
     def checkError(content):
-        checkIDJson = json.loads(content)
-        extractErrorCode = checkIDJson['error']['code']
+        # checkIDJson = json.loads(content)
+        extractErrorCode = content['error']['code']
         if extractErrorCode == 'NotFoundError':
             print(
                 f'This file has not been uploaded to Virus Total before -- consider uploading the file for scanning at \n"https://www.virustotal.com/gui/home/upload"')

@@ -1,4 +1,4 @@
-import os, time
+import os, time, json
 
 from watchingdog import Watchdog
 from hash_generator import HashGenerator
@@ -46,20 +46,31 @@ if __name__ == '__main__':
                 # generate hashes
                 time.sleep(10)
                 sha256HASH = hashGen.startHash()
+                time.sleep(5)
 
                 # check to see if user wants to use API
-                useAPI = getArgs.useVirusTotal()
-                if useAPI:
-                    vt = VTChecking()
-                    vt.hashExists(sha256HASH)
+                while True:
+                    useAPI = getArgs.useVirusTotal()
+                    if useAPI:
+                        vt = VTChecking()
+                        response = vt.hashExists(sha256HASH)
+                        checkIDJson = json.loads(response)
 
-                elif not useAPI:
-                    pass
-                else:
-                    print("[-] Unknown entry, please use 'y' or 'n'...")
+                        if 'error' not in checkIDJson:
+                            vt.parseJson(checkIDJson)
 
-        #         # time.sleep(3)
-        #         # vtHashCheck()
+                        if 'error' in checkIDJson:
+                            vt.checkError(checkIDJson)
+
+                    elif not useAPI:
+                        checkInput = input("[+] Would you like to exit to start [y/n]? >> ")
+                        if checkInput == 'y':
+                            break
+                        elif checkInput == 'n':
+                            continue
+                    else:
+                        print("[-] Unknown entry, please use 'y' or 'n'...")
+                        continue
                 time.sleep(1)
                 clean_script()
 
