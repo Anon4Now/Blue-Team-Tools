@@ -117,13 +117,5 @@ class URLDefenseDecoder(object):
             raise ValueError('Error parsing URL')
 
 
-# # Main function that takes user input and passes to defensedecoder class
-# def main():
-#     urldefense_decoder = URLDefenseDecoder()
-#
-#     try:
-#         return (urldefense_decoder.decode(result))
-#     except ValueError as e:
-#         return (e)
 
 

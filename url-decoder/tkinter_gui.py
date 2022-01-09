@@ -1,59 +1,57 @@
 import tkinter as tk
 from tkinter import *
-# from url_decoder import URLDefenseDecoder
 
 
 class DecoderGUIInput:
 
-    # Generate GUI for user input
-    @staticmethod
-    def tkinter_input():  # removed prompt="" parameter as it is not used
-        root = tk.Tk()
-        root.geometry("400x50")
-        root.title("Pilot Decoder")
-        root.configure(bg='#16325c')
-        entry = tk.Entry(root, bd=1)
-        entry.config(fg='grey')
-        entry.pack(side="left")
-        entry.pack()
-        entry.grid(row=1,
-                   column=0,
-                   padx=7,
-                   pady=10,
-                   ipadx=130,
-                   ipady=3)
-        result = None
+    # Set the GUI Geometry during object instantiation
+    def __init__(self):
+        self.root = tk.Tk()
+        self.root.geometry("400x50")
+        self.root.title("Pilot Decoder")
+        self.root.configure(bg='#16325c')
+        self.entry = tk.Entry(self.root, bd=1)
+        self.entry.config(fg='grey')
+        self.entry.pack(side="left")
+        self.entry.pack()
+        self.entry.grid(row=1,
+                        column=0,
+                        padx=7,
+                        pady=10,
+                        ipadx=130,
+                        ipady=3)
+        self.result = None
 
-        # Event listeners for user text entry
-        def on_entry_click():  # removed event from parameter
-            if entry.get() == 'Paste encoded URL and press <ENTER>...':
-                entry.delete(0, "end")  # delete all the text in the entry
-            entry.insert(0, '')  # Insert blank for user input
-            entry.config(fg='black')
+    # Event listeners for user text entry
+    def on_entry_click(self, event):  # need event param due to tkinter program
+        if self.entry.get() == 'Paste encoded URL and press <ENTER>...':
+            self.entry.delete(0, "end")  # delete all the text in the entry
+        self.entry.insert(0, '')  # Insert blank for user input
+        self.entry.config(fg='black')
 
-        def on_focusout():
-            if entry.get() == '':
-                entry.insert(0, 'Paste encoded URL and press <ENTER>...')
-                entry.config(fg='grey')
+    # Event listeners for user text entry
+    def on_focusout(self, event):  # need event param due to tkinter program
+        if self.entry.get() == '':
+            self.entry.insert(0, 'Paste encoded URL and press <ENTER>...')
+            self.entry.config(fg='grey')
 
-        def callback():
-            nonlocal result
-            result = entry.get()
-            root.destroy()
+    # Event listeners for user text entry
+    def callback(self, event):  # need event param due to tkinter program
+        self.result = self.entry.get()
+        self.root.destroy()
 
-        entry.insert(0, 'Paste encoded URL and press <ENTER>...')
-        entry.bind('<FocusIn>', on_entry_click)
-        entry.bind('<FocusOut>', on_focusout)
-        entry.bind("<Return>", callback)
-        root.mainloop()
-        return result
+    # Call the methods and binds the GUI
+    def binding(self):
+        self.entry.insert(0, 'Paste encoded URL and press <ENTER>...')
+        self.entry.bind('<FocusIn>', self.on_entry_click)
+        self.entry.bind('<FocusOut>', self.on_focusout)
+        self.entry.bind("<Return>", self.callback)
+        self.root.mainloop()
+        return self.result
 
-    # result = tkinter_input()  # may need to remove this line
 
-
+# Returns output to GUI
 class DecoderGUIOutput:
-    # Returns output to GUI
-    # endresult = main()  # may need to remove this line
 
     @staticmethod
     def displayResult(resultInput):
