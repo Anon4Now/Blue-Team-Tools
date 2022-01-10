@@ -23,7 +23,7 @@ if __name__ == '__main__':
     clean_script()
 
     while True:
-        userInput = input("\r[+] Would you like to start watching a folder [y/n]? >> ")
+        userInput = input("\r[+] Would you like to start watching a folder? [y/n] >> ")
 
         getArgs = GetUserOptions()
 
@@ -65,7 +65,7 @@ if __name__ == '__main__':
                             break
 
                     elif not useAPI:
-                        checkInput = input("[+] Would you like to exit to start [y/n]? >> ")
+                        checkInput = input("[+] Would you like to exit to start? [y/n] >> ")
                         if checkInput == 'y':
                             break
                         elif checkInput == 'n':
@@ -77,7 +77,7 @@ if __name__ == '__main__':
                 clean_script()
 
         elif userInput == 'n':
-            userInput = input("[+] Do you want to exit [y/n]? >> ")
+            userInput = input("[+] Do you want to exit? [y/n] >> ")
             if userInput == 'y':
                 print("[+] Closing program...")
                 getArgs.stopWatching()

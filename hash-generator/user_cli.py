@@ -1,3 +1,5 @@
+import getpass
+import platform
 import sys, time
 
 from watchingdog import Watchdog
@@ -9,14 +11,23 @@ class GetUserOptions:
     @staticmethod
     def startWatchingPath():
 
-        path = input(
-            "[+] Folder to be monitored, default is Downloads [enter file path or enter 'd' for default]? >> ")
+        osName = platform.system()
+        username = getpass.getuser()
 
-        if path == 'd':
-            path = 'C:/Users/tutko/Downloads'
+        defaultPath = input("[+] The default path to monitor is Downloads, do you want keep this? [y/n] >> ")
+
+        if defaultPath == 'y':
+            if 'Windows' in osName:
+                path = f'C:/Users/{username}/Downloads'
+                return path
+            elif 'Linux' in osName:
+                path = f'/home/{username}/Downloads'
+                return path
+        elif defaultPath == 'n':
+            path = input("[+] Enter path to folder to monitor (remove quotations '\"')? >> ")
+            if '\\' in path:
+                path = path.replace("\\", "/")
             return path
-        else:
-            pass  # update this to pull the folder based on input (i.e. Documents)
 
     @staticmethod
     def countDownToDownload():
@@ -39,7 +50,7 @@ class GetUserOptions:
     @staticmethod
     def useVirusTotal():
 
-        vt = input("Would you like to check the SHA256 hash against VirusTotal DB [y/n]? >> ")
+        vt = input("Would you like to check the SHA256 hash against VirusTotal DB? [y/n] >> ")
 
         if vt == 'y':
             return True
