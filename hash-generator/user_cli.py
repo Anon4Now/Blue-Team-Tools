@@ -29,7 +29,7 @@ class GetUserOptions:
     # Return countdown to CLI to download file
     @staticmethod
     def countDownToDownload():
-        for i in range(45, -1, -1):  # set the time to download
+        for i in range(300, -1, -1):  # set the time to download
             if not Watchdog.eventCheck:  # check to see if an event was seen by Watchdog
                 if i == 0:  # if counter == 0 - clear stdout, end loop, and return None
                     sys.stdout.flush()
