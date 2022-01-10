@@ -49,31 +49,35 @@ if __name__ == '__main__':
 
                 # see if user has set up API file in directory
                 if os.path.exists(".env"):
-                    # check to see if user wants to use API
+                    # start inner loop
                     while True:
-                        useAPI = getArgs.useVirusTotal()
-                        if useAPI:
-                            vt = VTChecking()
-                            response = vt.hashExists(sha256HASH)
-                            checkIDJson = json.loads(response)
+                        useAPI = getArgs.useVirusTotal()  # prompt user if they want to use API check
 
+                        # if yes is given
+                        if useAPI:
+                            vt = VTChecking()  # instantiate object
+                            response = vt.hashExists(sha256HASH)  # send hash to VT API call
+                            checkIDJson = json.loads(response)  # parse JSON to str
+
+                            # if error is not present in response
                             if 'error' not in checkIDJson:
                                 vt.parseJson(checkIDJson)
                                 break
-
+                            # if error is present in response
                             if 'error' in checkIDJson:
                                 vt.checkError(checkIDJson)
                                 break
 
+                        # is no is given
                         elif not useAPI:
                             checkInput = input("[+] Would you like to exit to start? [y/n] >> ")
                             if checkInput == 'y':
-                                break
+                                break  # stop inner loop
                             elif checkInput == 'n':
-                                continue
+                                continue  # loop back to start of inner loop
                         else:
                             print("[-] Unknown entry, please use 'y' or 'n'...")
-                            continue
+                            continue  # loop back to start of inner loop
                     time.sleep(1)
                     clean_script()
 
