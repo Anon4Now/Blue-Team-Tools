@@ -1,180 +1,99 @@
-import json
-import os
-import sys
-import time
-import hashlib
-import datetime
+import os, time, json
 
-from typing import KeysView
-from pynput.keyboard import Key, Listener
-from watchingdog.observers import Observer
-from watchingdog.events import PatternMatchingEventHandler
-from vt_check import vtChecking
+from watchingdog import Watchdog
+from hash_generator import HashGenerator
+from user_cli import GetUserOptions
+from vt_check import VTChecking
 
-# Global vars used in script
-hashList = []
-currentState = []
-patterns = ["*"]
-ignore_patterns = None
-ignore_directories = False
-case_sensitive = True
+fileName = "list.txt"  # name of temp file
 
 
 # Will reset script upon init in case reset did not occur at end
 def clean_script():
-    if os.path.exists("list.txt"):
-
-        os.remove("list.txt")
-
-    else:
-        pass
-
-    currentState.clear()
+    if os.path.exists(fileName):
+        os.remove(fileName)
 
 
-# Checks SHA256 hash against Virus Total (VT) threat database and returns results if possible
-def vtHashCheck():
-    checkID = vtChecking.hashExists(hashList[0])
-    checkIDJson = json.loads(checkID)
+if __name__ == '__main__':
+    clean_script()  # run clean script to remove old list file
 
-    if not 'error' in checkIDJson:
-        lastStatsDict = {}
+    # start outer user loop
+    while True:
+        userInput = input("\r[+] Would you like to start watching a folder? [y/n] >> ")
+        getArgs = GetUserOptions()  # instantiate GetUserOptions Class Object
 
-        extractLastAnalysisDate = datetime.datetime.fromtimestamp(
-            checkIDJson['data']['attributes']['last_analysis_date'])
-        extractLastAnalysisStats = checkIDJson['data']['attributes']['last_analysis_stats']
+        # check initial response from user
+        if userInput == 'y':
+            path = getArgs.startWatchingPath()  # call Watchdog class for additional prompts around path to watch
+            watcher = Watchdog(path)  # instantiate Watchdog object with path
+            isStarted = watcher.startObserver()  # start the observer
 
-        print(f'Last Analysis Date : {extractLastAnalysisDate}')
+            # check to see if file path provided by user was not found
+            if isStarted:
+                print("[+] Seconds left to download file")
+                checkForFile = getArgs.countDownToDownload()  # start the download counter
 
-        print(f'Last Analysis Stats:')
-        for key in extractLastAnalysisStats:
-            lastStatsDict[key] = extractLastAnalysisStats[key]
-            print(F'   {key}: {extractLastAnalysisStats[key]}')
+                # check if file was attempted to be downloaded during timer
+                if not checkForFile:
+                    print("\r[-] No file detected, returning to start...")
+                    time.sleep(3)
+                    continue  # return to start of outer loop
+                else:
+                    hashGen = HashGenerator(fileName)  # instantiate HashGenerator object with update file
 
-        for key in lastStatsDict:
-            if key == 'malicious':
-                if lastStatsDict[key] == 0:
-                    print(f'\nBased on results, the file appears safe')
-                elif lastStatsDict[key] > 0 and lastStatsDict[key] < 2:
-                    print(f'\nSome vendors flagged this file, consider additional research')
-                elif lastStatsDict[key] > 2:
-                    print(f'\nThis file may be malicious, consider not downloading')
+                    # generate hashes
+                    time.sleep(
+                        10)  # provide enough time for watcher to get the final file type - can be problematic with large files
+                    sha256HASH = hashGen.startHash()  # call hash gen and return val
+                    time.sleep(5)
+                    clean_script()
 
-    if 'error' in checkIDJson:
-        extractErrorCode = checkIDJson['error']['code']
-        if extractErrorCode == 'NotFoundError':
-            print(
-                f'This file has not been uploaded to Virus Total before -- consider uploading the file for scanning at \n"https://www.virustotal.com/gui/home/upload"')
+                # see if user has set up API file in directory
+                if os.path.exists(".env"):
+                    # start inner loop
+                    while True:
+                        useAPI = getArgs.useVirusTotal()  # prompt user if they want to use API check
 
-        elif extractErrorCode != 'NotFoundError':
-            print(f'Error returned from VT is {extractErrorCode}')
+                        # if yes is given
+                        if useAPI:
+                            vt = VTChecking()  # instantiate object
+                            response = vt.hashExists(sha256HASH)  # send hash to VT API call
+                            checkIDJson = json.loads(response)  # parse JSON to str
 
-        else:
-            pass
+                            # if error is not present in response
+                            if 'error' not in checkIDJson:
+                                vt.parseJson(checkIDJson)
+                                break
+                            # if error is present in response
+                            if 'error' in checkIDJson:
+                                vt.checkError(checkIDJson)
+                                break
 
+                        # is no is given
+                        elif not useAPI:
+                            checkInput = input("[+] Would you like to exit to start? [y/n] >> ")
+                            if checkInput == 'y':
+                                break  # stop inner loop
+                            elif checkInput == 'n':
+                                continue  # loop back to start of inner loop
+                        else:
+                            print("[-] Unknown entry, please use 'y' or 'n'...")
+                            continue  # loop back to start of inner loop
+                    time.sleep(1)
+                    clean_script()
 
-# Methods that perform the "watchdog" capabilities on the path defined and the method that creates hashes
-class eventMessage:
-
-    # watch for "create" events in file path
-    def on_created(event):
-        if event:
-            currentState.append(True)
-
-    # watch for "modified" events in file path and write event to txt file in py path
-    def on_modified(event):
-
-        t = str(event.src_path)
-
-        with open("list.txt", "w+") as file:
-            file.write(t)
-
-    # read from txt file created by on_modified and use data to generate hashes
-    def callList():
-
-        with open("list.txt") as file:
-            data = file.read()
-            print(f'[File Name] - {data}')
-
-            BLOCK_SIZE = 65536  # The size of each read from the file
-
-            hash_sha256 = hashlib.sha256()  # Create the hash object for SHA256 `.sha256()`
-            hash_sha1 = hashlib.sha1()  # Create the hash object for SHA1 `.sha1()`
-            hash_md5 = hashlib.md5()  # Create the hash object for MD5`.md5()'
-            with open(data, 'rb') as f:  # Open the file to read it's bytes
-                fb = f.read(BLOCK_SIZE)  # Read from the file. Take in the amount declared above
-                while len(fb) > 0:  # While there is still data being read from the file
-                    hash_sha256.update(fb)  # Update the hash
-                    hash_sha1.update(fb)  # Update the hash
-                    hash_md5.update(fb)  # Update the hash
-                    fb = f.read(BLOCK_SIZE)  # Read the next block from the file
-
-            print(f'[SHA-256 Hash] - {hash_sha256.hexdigest()}')  # Print the hash value to CLI
-            print(f'[SHA-1 Hash] - {hash_sha1.hexdigest()}')  # Print the hash value to CLI
-            print(f'[MD5 Hash] - {hash_md5.hexdigest()}\n')  # Print the hash value to CLI
-
-            hashList.append(hash_sha256.hexdigest())  # Append the hash value to gloval list
-
-
-# Event Handler Configurations
-my_event_handler = PatternMatchingEventHandler(patterns, ignore_patterns, ignore_directories, case_sensitive)
-my_event_handler.on_created = eventMessage.on_created
-my_event_handler.on_modified = eventMessage.on_modified
-
-# Define path and set "Observer" class from watchdog
-path = 'C:/Users/tutko/Downloads/'
-go_recursively = True
-my_observer = Observer()
-my_observer.schedule(my_event_handler, path, recursive=go_recursively)
-
-
-# Starts the observer, prints time left to download file, and invokes other func/methods if file is provided
-def cliStart():
-    my_observer.start()
-
-    # show time left to download file on CLI
-    print(f'Seconds Left to Download File...\n')
-    for i in range(30, -1, -1):
-        if not True in currentState:
-            if i == 0:
-                sys.stdout.write(f'No File Given')
-                sys.stdout.flush()
-                time.sleep(1)
+            # if manual file path provided by user is not found
             else:
-                sys.stdout.write(str(i) + f' ')
-                sys.stdout.flush()
-                time.sleep(1)
+                print("[-] File path unknown, returning to start...")
 
-        else:
-            print(f'File seen - generating hashes...\n')
-            sys.stdout.flush()
-            break
-
-    # call functions and sleep
-    time.sleep(10)
-    eventMessage.callList()
-    time.sleep(3)
-    vtHashCheck()
-    time.sleep(1)
-    clean_script()
-
-
-if __name__ == "__main__":
-    clean_script()
-    print(f'Click <ENTER> to begin or <DELETE> to exit\n')
-
-
-    # Keyboard event listener used to define when to start script
-    def show(key):
-
-        if key == Key.enter:  # By pressing <ENTER> it starts the loop
-            cliStart()
-
-        if key == Key.delete:  # By pressing <DELETE> button it terminates the loop
-            return False
-
-
-    with Listener(on_press=show) as listener:
-        listener.join()
-
-    show()
+        # if user does not want to monitor folder
+        elif userInput == 'n':
+            userInput = input("[+] Do you want to exit? [y/n] >> ")
+            if userInput == 'y':
+                print("[+] Closing program...")
+                getArgs.stopWatching()  # call method to exit program
+            elif userInput == 'n':
+                continue  # loop back to starting prompt - outer loop
+            else:
+                print("[-] Unknown input, please enter 'y' or 'n'...")
+                continue  # loop back to starting prompt - outer loop

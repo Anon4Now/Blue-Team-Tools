@@ -5,7 +5,7 @@ from hash_generator import HashGenerator
 from user_cli import GetUserOptions
 from vt_check import VTChecking
 
-fileName = "list.txt"
+fileName = "list.txt"  # name of temp file
 
 
 # Will reset script upon init in case reset did not occur at end
@@ -46,6 +46,7 @@ if __name__ == '__main__':
                         10)  # provide enough time for watcher to get the final file type - can be problematic with large files
                     sha256HASH = hashGen.startHash()  # call hash gen and return val
                     time.sleep(5)
+                    clean_script()
 
                 # see if user has set up API file in directory
                 if os.path.exists(".env"):
