@@ -47,8 +47,8 @@ if __name__ == '__main__':
                     sha256HASH = hashGen.startHash()  # call hash gen and return val
                     time.sleep(5)
 
+                # see if user has set up API file in directory
                 if os.path.exists(".env"):
-
                     # check to see if user wants to use API
                     while True:
                         useAPI = getArgs.useVirusTotal()
