@@ -5,49 +5,49 @@ from hash_generator import HashGenerator
 from user_cli import GetUserOptions
 from vt_check import VTChecking
 
-
 fileName = "list.txt"
 
 
 # Will reset script upon init in case reset did not occur at end
 def clean_script():
     if os.path.exists(fileName):
-
         os.remove(fileName)
-
-    else:
-        pass
 
 
 if __name__ == '__main__':
-    clean_script()
+    clean_script()  # run clean script to remove old list file
 
+    # start outer user loop
     while True:
         userInput = input("\r[+] Would you like to start watching a folder? [y/n] >> ")
+        getArgs = GetUserOptions()  # instantiate GetUserOptions Class Object
 
-        getArgs = GetUserOptions()
-
+        # check initial response from user
         if userInput == 'y':
-            path = getArgs.startWatchingPath()
+            path = getArgs.startWatchingPath()  # call Watchdog class for additional prompts around path to watch
+            watcher = Watchdog(path)  # instantiate Watchdog object with path
+            isStarted = watcher.startObserver()  # start the observer
 
-            watcher = Watchdog(path)
-            isStarted = watcher.startObserver()
-
+            # check to see if file path provided by user was not found
             if isStarted:
                 print("[+] Seconds left to download file")
-                checkForFile = getArgs.countDownToDownload()
+                checkForFile = getArgs.countDownToDownload()  # start the download counter
 
+                # check if file was attempted to be downloaded during timer
                 if not checkForFile:
                     print("\r[-] No file detected, returning to start...")
                     time.sleep(3)
-                    continue
+                    continue  # return to start of outer loop
                 else:
-                    hashGen = HashGenerator(fileName)
+                    hashGen = HashGenerator(fileName)  # instantiate HashGenerator object with update file
 
                     # generate hashes
-                    time.sleep(10)
-                    sha256HASH = hashGen.startHash()
+                    time.sleep(
+                        10)  # provide enough time for watcher to get the final file type - can be problematic with large files
+                    sha256HASH = hashGen.startHash()  # call hash gen and return val
                     time.sleep(5)
+
+                if os.path.exists(".env"):
 
                     # check to see if user wants to use API
                     while True:
@@ -76,16 +76,19 @@ if __name__ == '__main__':
                             continue
                     time.sleep(1)
                     clean_script()
+
+            # if manual file path provided by user is not found
             else:
                 print("[-] File path unknown, returning to start...")
 
+        # if user does not want to monitor folder
         elif userInput == 'n':
             userInput = input("[+] Do you want to exit? [y/n] >> ")
             if userInput == 'y':
                 print("[+] Closing program...")
-                getArgs.stopWatching()
+                getArgs.stopWatching()  # call method to exit program
             elif userInput == 'n':
-                continue
+                continue  # loop back to starting prompt - outer loop
             else:
                 print("[-] Unknown input, please enter 'y' or 'n'...")
-                continue
+                continue  # loop back to starting prompt - outer loop
