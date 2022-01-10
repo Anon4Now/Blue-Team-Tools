@@ -37,6 +37,10 @@ class Watchdog:
             file.write(getEvent)
 
     def startObserver(self):
-        my_observer = Observer()
-        my_observer.start()
-        my_observer.schedule(self.eventHandlerConfig(), self.path, recursive=self.goRecursive)
+
+        try:
+            my_observer = Observer()
+            my_observer.start()
+            my_observer.schedule(self.eventHandlerConfig(), self.path, recursive=self.goRecursive)
+        except FileNotFoundError as e:
+            return None
