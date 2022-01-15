@@ -27,6 +27,7 @@ A lot of good sites provide the hashes that are attributed to their offical copy
 - This can be converted to a standalone exe if run on Windows OS
 - This tool will work regardless of whether the API functionality is set-up, the prompt to run against VT will not appear
 - This should work on Linux, OSX, or Windows OS's
+- This can be tested with any file that can be downloaded (🟨 NOTE: if downloading something as large as a VM, the results may not be correct)
 
 ## ❗IMPORTANT:
 
