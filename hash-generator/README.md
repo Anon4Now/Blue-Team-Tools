@@ -17,9 +17,9 @@ A lot of good sites provide the hashes that are attributed to their offical copy
     - [watchdog](https://pypi.org/project/watchdog/)
     - [dotenv](https://pypi.org/project/python-dotenv/)
 - To use the VirusTotal API functionality, it will require an VT account and API key
-    - Use this article [LINK](https://dev.to/jakewitcher/using-env-files-for-environment-variables-in-python-applications-55a1) to learn more about this process (it's easy honestly)
+    - Use this article [LINK](https://dev.to/jakewitcher/using-env-files-for-environment-variables-in-python-applications-55a1) to learn more about .env and this [LINK](https://www.tines.com/blog/virustotal-api-security-automation) for VT account creation (it's easy honestly)
     - Afterwards progress to IMPORTANT section below for information about what to do with the API key
-- Lastly this tool needs a Python interpreter, v3.6 or higher due to string interpolation
+- Lastly this tool needs a ![small](https://user-images.githubusercontent.com/80045938/148561762-9590c4a1-a424-4c7b-a0fb-68190fb7a31c.png) [Python](https://www.python.org/downloads/) interpreter, v3.6 or higher due to string interpolation
 
 
 ## Quick Notes:
@@ -28,13 +28,13 @@ A lot of good sites provide the hashes that are attributed to their offical copy
 - This tool will work regardless of whether the API functionality is set-up, the prompt to run against VT will not appear
 - This should work on Linux, OSX, or Windows OS's
 
-## IMPORTANT:
+## ❗IMPORTANT:
 
 This tool will hide the prompt to take the generated SHA256 hash unless the user has created a .env file in the same directory as the source files. This is done to prevent the user from attempting to hard code their API credentials into the code, and to do it the secure way through leveraging environment variables.
 
-Obviously I cannot stop anyone from taking that route if that really want, but I would strongly suggest against it. Creating and using environment variables for this tool is easy. For more information on how to create a .env file, use this LINK.
+Obviously I cannot stop anyone from taking that route if that really want, but I would strongly suggest against it. Creating and using environment variables for this tool is easy. For more information on how to create a .env file, use this [LINK](https://dev.to/jakewitcher/using-env-files-for-environment-variables-in-python-applications-55a1).
 
-Once you have created the file in the correct directory update the file with the variables below, reference the VirusTotal's API docs for more info:
+Once you have created the file in the correct directory update the file with the variables below, reference the VirusTotal's API [DOCS](https://developers.virustotal.com/reference/overview) for more info:
 ```
 # Development settings
 API_ENDPOINT=https://www.virustotal.com/api/v3/files/
