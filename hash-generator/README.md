@@ -9,7 +9,7 @@ A lot of good sites provide the hashes that are attributed to their offical copy
 
 - Will use a "watchdog" function to monitor a path defined by the user, it will default to the OS's "Download" folder
 - Will generate SHA256, SHA1, and MD5 hashes for a file, this is done because some sites provide only one of those options
-- Can provide the ability to take the SHA256 hash and check VirusTotal's scanned database of details (read on for how to enable this functionality)
+- Can provide the ability to take the SHA256 hash and check VirusTotal's scanned database of files (read on for how to enable this functionality)
 
 ## Tool Requirements:
 
