@@ -47,10 +47,14 @@ At this point you are done, and the prompt "*Would you like to check the SHA256 
 
 ## Using the Tool:
 
-#### Step 1: Run the binary with a Python interpreter or as a standalone exe
+#### Step 1: 
+Run the binary or standalone exe to start CLI prompts.
+![start_program](https://user-images.githubusercontent.com/80045938/149607071-48f9168b-bf46-4245-8994-ad9e01adc7a8.gif)
 
+#### Step 2: 
+Download the wanted file, the program will generate SHA256, SHA1, and MD5 hashes. This will take approximately 8-10 seconds.
+![gen_hashes](https://user-images.githubusercontent.com/80045938/149607081-1050a921-d786-4da3-bd5d-85ec620862b6.gif)
 
-#### Step 2: Download the wanted file, the program will identify the file downloaded and generate SHA256, SHA1, and MD5 hashes
-
-
-#### Step 3: !IMPORTANT For this option to be presented to the user, a .env file will need to be present
+#### Step 3: 
+**IMPORTANT** For this option to be presented to the user, a .env file will need to be present
+![get_api_results](https://user-images.githubusercontent.com/80045938/149607147-1d7fe82a-d119-460e-9203-f9471e3a9342.gif)
