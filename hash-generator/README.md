@@ -40,7 +40,7 @@ Once you have created the file in the correct directory update the file with the
 # Development settings
 API_ENDPOINT=https://www.virustotal.com/api/v3/files/
 API_KEY="x-apikey"
-API_KEY_VAL="<API_KEY>"
+API_KEY_VAL="<API_KEY_VAL>"
 ```
 At this point you are done, and the prompt "*Would you like to check the SHA256 hash against VirusTotal DB? [y/n] >>*" should appear after you generate hashes.
 
