@@ -13,12 +13,11 @@ A lot of good sites provide the hashes that are attributed to their offical copy
 
 ## Tool Requirements:
 
-- To use the default functionality of this tool (watching folders, and creating hashes) a couple of modules will need to be installed
-    - watchdog
-    - etc
-    - etc
+- To use the default functionality of this tool (watching folders, and creating hashes) a couple of modules will need to be installed using pip
+    - [watchdog](https://pypi.org/project/watchdog/)
+    - [dotenv](https://pypi.org/project/python-dotenv/)
 - To use the VirusTotal API functionality, it will require an VT account and API key
-    - Use this link to learn more about this process (it's easy honestly)
+    - Use this article [LINK](https://dev.to/jakewitcher/using-env-files-for-environment-variables-in-python-applications-55a1) to learn more about this process (it's easy honestly)
     - Afterwards progress to IMPORTANT section below for information about what to do with the API key
 - Lastly this tool needs a Python interpreter, v3.6 or higher due to string interpolation
 
