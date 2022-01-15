@@ -33,7 +33,7 @@ A lot of good sites provide the hashes that are attributed to their offical copy
 
 This tool will hide the prompt to take the generated SHA256 hash unless the user has created a .env file in the same directory as the source files. This is done to prevent the user from attempting to hard code their API credentials into the code, and to do it the secure way through leveraging environment variables.
 
-Obviously I cannot stop anyone from taking that route if that really want, but I would strongly suggest against it. Creating and using environment variables for this tool is easy. For more information on how to create a .env file, use this [LINK](https://dev.to/jakewitcher/using-env-files-for-environment-variables-in-python-applications-55a1).
+Obviously I cannot stop anyone from taking that route if they really want, but I would strongly suggest against it. Creating and using environment variables for this tool is easy. For more information on how to create a .env file, use this [LINK](https://dev.to/jakewitcher/using-env-files-for-environment-variables-in-python-applications-55a1).
 
 Once you have created the file in the correct directory update the file with the variables below, reference the VirusTotal's API [DOCS](https://developers.virustotal.com/reference/overview) for more info:
 ```
