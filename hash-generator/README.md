@@ -1,4 +1,4 @@
-### Hash Generator
+# Hash Generator
 
 I created this tool because I wanted an easier way to evaluate downloads that I was making online. 
 
