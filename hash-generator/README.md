@@ -35,7 +35,7 @@ This tool will hide the prompt to take the generated SHA256 hash unless the user
 
 Obviously I cannot stop anyone from taking that route if they really want, but I would strongly suggest against it. Creating and using environment variables for this tool is easy. For more information on how to create a .env file, use this [LINK](https://dev.to/jakewitcher/using-env-files-for-environment-variables-in-python-applications-55a1).
 
-Once you have created the file in the correct directory update the file with the variables below, reference the VirusTotal's API [DOCS](https://developers.virustotal.com/reference/overview) for more info:
+Once you have created the .env file in the correct directory update the file with the variables below, reference the VirusTotal's API [DOCS](https://developers.virustotal.com/reference/overview) for more info:
 ```
 # Development settings
 API_ENDPOINT=https://www.virustotal.com/api/v3/files/
