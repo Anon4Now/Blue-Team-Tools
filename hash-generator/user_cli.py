@@ -61,4 +61,4 @@ class GetUserOptions:
     # Exit program
     @staticmethod
     def stopWatching():
-        exit()
+        sys.exit(-1)
