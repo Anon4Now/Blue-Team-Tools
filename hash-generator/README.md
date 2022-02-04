@@ -2,7 +2,7 @@
 
 I created this tool because I wanted an easier way to evaluate downloads that I was making online. 
 
-A lot of good sites provide the hashes that are attributed to their offical copy of the product, however that hash is only as good as the user who recreates it after download. This tool will automate that process of generating the hashes and makes it easier to compare to the hash value on the download site. Additionally this tool has a module that will call a VirusTotals API and check to see if a this hash was evaluated before, and if so it will return those findings.
+A lot of good sites provide the hashes that are attributed to their offical copy of the product, however that hash is only as good as the user who recreates it after download. This tool will automate that process of generating the hashes and makes it easier to compare to the hash value on the download site. Additionally this tool has a module that will call a VirusTotal API and check to see if a this hash was evaluated before, and if so it will return those findings.
 
 
 ## Tool Functionality:
